@@ -1,0 +1,2 @@
+#!/bin/bash
+CXX="g++" CC="gcc" LDFLAGS="-Wl,-rpath=@CMAKE_INSTALL_PREFIX@/lib" @PROJECT_BINARY_DIR@/3rdparty/python/configure "$@"
