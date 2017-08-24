@@ -1,0 +1,25 @@
+#!/bin/ksh
+#PBS -N hoomd
+#PBS -j oe
+#PBS -l nodes=1
+#PBS -l walltime=00:30:00
+#PBS -A @PROJ_ID@
+
+source /opt/modules/default/init/ksh
+
+export LD_LIBRARY_PATH=@BOOST_ROOT@/lib:@CMAKE_INSTALL_PREFIX@/lib:$LD_LIBRARY_PATH
+export PATH=.:@CMAKE_INSTALL_PREFIX@/bin:$PATH
+
+module load boost/1.57.0
+module load cudatoolkit/7.5.18-1.0502.10743.2.1
+
+mkdir -p @CMAKE_INSTALL_PREFIX@/stage_dir/$PBS_JOBID
+cp -r @PROJECT_SOURCE_DIR@/test_data/* @CMAKE_INSTALL_PREFIX@/stage_dir/$PBS_JOBID
+cd @CMAKE_INSTALL_PREFIX@/stage_dir/$PBS_JOBID
+export LD_PRELOAD=
+export LD_LIBRARY_PATH=@DEDUP_LIB_DIR@:$LD_LIBRARY_PATH
+export DYNINSTAPI_RT_LIB=@DEDUP_DYNINST_SO@
+export CRAY_CUDA_MPS=1
+echo time aprun -n 1 -N 1 @CMAKE_INSTALL_PREFIX@/lib/python2.7/bin/hoomd ./microsphere/bmark.py --mode=gpu
+time aprun -n 1 -N 1 @CMAKE_INSTALL_PREFIX@/lib/python2.7/bin/hoomd ./microsphere/bmark.py --mode=gpu
+echo "No Profiling Launch with 1 nodes"
