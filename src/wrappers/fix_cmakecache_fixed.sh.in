@@ -1,0 +1,3 @@
+#!/bin/bash
+sed -i '/CUDA_NVCC_FLAGS:STRING=\"RIP\"/c\\CUDA_NVCC_FLAGS:STRING=-Xcompiler -fPIC' @PROJECT_BINARY_DIR@/HOOMD_FIXED-prefix/src/HOOMD_FIXED-build/CMakeCache.txt
+cat @PROJECT_BINARY_DIR@/HOOMD_FIXED-prefix/src/HOOMD_FIXED-build/CMakeCache.txt | grep "CUDA_NVCC_FLAGS"

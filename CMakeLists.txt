@@ -25,6 +25,10 @@ configure_file (
 	"${PROJECT_BINARY_DIR}/wrappers/fix_cmakecache.sh"
 )
 configure_file (
+    "${PROJECT_SOURCE_DIR}/src/wrappers/fix_cmakecache_fixed.sh.in"
+  "${PROJECT_BINARY_DIR}/wrappers/fix_cmakecache_fixed.sh"
+)
+configure_file (
     "${PROJECT_SOURCE_DIR}/src/wrappers/launch_script.ksh.in"
 	"${PROJECT_BINARY_DIR}/wrappers/launch_script.ksh"
 	@ONLY
@@ -76,7 +80,7 @@ ExternalProject_Add(
   CMAKE_ARGS -DBOOST_ROOT=${BOOST_ROOT} -DPYTHON_INCLUDE_DIR=${PYTHON_INCLUDE_DIR} -DCUDA_TOOLKIT_ROOT_DIR=${CUDA_TOOLKIT_ROOT_DIR} -DMPI_CXX_COMPILER=/opt/cray/craype/2.5.9/bin/CC -DMPI_C_COMPILER=/opt/cray/craype/2.5.9/bin/cc -DCUDA_ARCH_LIST=35 -DCOPY_HEADERS=On -DPYTHON_EXECUTABLE=${CMAKE_INSTALL_PREFIX}/bin/python -DNUMPY_INCLUDE_DIR=${CMAKE_INSTALL_PREFIX}/lib/python2.7/site-packages/numpy/core/include -DHOOMD_PYTHON_INCLUDE_DIR=${CMAKE_INSTALL_PREFIX}/include/python2.7 -DHOOMD_PYTHON_LIBRARY=${CMAKE_INSTALL_PREFIX}/lib64/libpython2.7.so -DCUDA_TOOLKIT_ROOT_DIR=${CUDA_TOOLKIT_ROOT_DIR} -DENABLE_CUDA=On -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}/hoomd-fixed -DCUDA_USE_STATIC_CUDA_RUNTIME=Off -DCUDA_NVCC_FLAGS="RIP"
   INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/hoomd-fixed
   SOURCE_DIR "${PROJECT_BINARY_DIR}/3rdparty/hoomd-fixed"
-  BUILD_COMMAND chmod 777 ${PROJECT_BINARY_DIR}/wrappers/fix_cmakecache.sh && ${PROJECT_BINARY_DIR}/wrappers/fix_cmakecache.sh && cp ${PROJECT_SOURCE_DIR}/src/correction/NeighborList.cc ${PROJECT_BINARY_DIR}/3rdparty/hoomd-fixed/libhoomd/computes/NeighborList.cc && $(MAKE)
+  BUILD_COMMAND chmod 777 ${PROJECT_BINARY_DIR}/wrappers/fix_cmakecache_fixed.sh && ${PROJECT_BINARY_DIR}/wrappers/fix_cmakecache_fixed.sh && cp ${PROJECT_SOURCE_DIR}/src/correction/NeighborList.cc ${PROJECT_BINARY_DIR}/3rdparty/hoomd-fixed/libhoomd/computes/NeighborList.cc && $(MAKE)
   UPDATE_COMMAND ""
 )
 
